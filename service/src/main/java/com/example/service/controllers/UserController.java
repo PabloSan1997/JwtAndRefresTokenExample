@@ -50,7 +50,7 @@ public class UserController {
                 .httpOnly(true)
                 .secure(false)
                 .path("/")
-                .sameSite("Strict")
+                .sameSite("Lax")
                 .build();
 
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(new TokenDto(res.getJwt()));

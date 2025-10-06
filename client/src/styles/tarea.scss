@@ -1,0 +1,50 @@
+.tarea {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background: rgb(252, 236, 236);
+
+  &.active {
+    background: rgb(224, 255, 224);
+
+    p {
+      color: rgb(1, 31, 1);
+    }
+
+    span {
+      color: rgb(67, 122, 67);
+    }
+  }
+
+  p {
+    flex-grow: 1;
+    margin: 0 10px;
+    color: rgb(31, 1, 1);
+  }
+
+  span {
+    font-size: 0.8em;
+    color: rgb(139, 97, 97);
+    margin-inline: 0.5rem;
+  }
+
+  .delete-button,
+  .complete-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 1.2em;
+  }
+
+  .delete-button {
+    color: red;
+  }
+
+  .complete-button {
+    color: green;
+  }
+}

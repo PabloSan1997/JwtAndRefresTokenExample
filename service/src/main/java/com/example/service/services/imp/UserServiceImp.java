@@ -1,6 +1,7 @@
 package com.example.service.services.imp;
 
 import com.example.service.exception.MyBadRequestException;
+import com.example.service.exception.NotRefreshException;
 import com.example.service.models.dtos.*;
 import com.example.service.models.entities.RolesEntity;
 import com.example.service.models.entities.UserEntity;
@@ -92,7 +93,7 @@ public class UserServiceImp implements UserService {
             loginentity.setState(false);
             loginRespository.save(loginentity);
         } catch (Exception e) {
-            throw new MyBadRequestException("Inicie seccion de nuevo");
+            throw new NotRefreshException();
         }
     }
 
@@ -113,7 +114,7 @@ public class UserServiceImp implements UserService {
             String token = jwtService.token(userDetailsDto);
             return new TokenDto(token);
         } catch (Exception e) {
-            throw new MyBadRequestException("Inicie seccion de nuevo");
+            throw new NotRefreshException();
         }
     }
 

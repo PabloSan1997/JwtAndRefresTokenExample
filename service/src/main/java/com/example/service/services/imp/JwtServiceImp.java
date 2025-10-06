@@ -58,7 +58,7 @@ public class JwtServiceImp implements JwtService {
         Claims claims = Jwts.claims().add("jwtid", newrefresh.getId().toString()).build();
         String token = Jwts.builder().signWith(secretKey(keyrefresh))
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 1000 *60*60*24))
+                .expiration(new Date(System.currentTimeMillis() + 1000*60*60*24*7))
                 .claims(claims)
                 .subject(user.getUsername()).compact();
         newrefresh.setRefreshtoken(token);

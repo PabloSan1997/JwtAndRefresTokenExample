@@ -1,15 +1,11 @@
-import { createFileRoute } from '@tanstack/react-router'
-import logo from '../logo.svg'
-import '../App.css'
+import { UseAppContext } from "@/ContextProvider";
+import { createFileRoute, Navigate } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   component: App,
-})
+});
 
 function App() {
-  return (
-    <div className="App">
-    hola
-    </div>
-  )
+  const { jwt } = UseAppContext();
+  return <Navigate to={jwt.trim() ? "/mytasks" : "/login"} />;
 }
