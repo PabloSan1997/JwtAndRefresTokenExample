@@ -27,7 +27,7 @@ function RouteComponent() {
         onChange={(e) => setData({ ...data, username: e.target.value })}
       />
       <input
-        type="text"
+        type="password"
         placeholder="Password"
         value={data.password}
         onChange={(e) => setData({ ...data, password: e.target.value })}

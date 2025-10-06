@@ -58,7 +58,6 @@ public class UserServiceImp implements UserService {
             String jwt = jwtService.token(user);
             return TwoJwtDto.builder().jwt(jwt).tokenrefresh(refreshtoken).build();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             throw new MyBadRequestException("Username o password incorrectos");
         }
 

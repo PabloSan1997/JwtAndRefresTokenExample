@@ -74,6 +74,10 @@ public class SecurityConfig {
                                 "/api/tarea/{id}"
                         )
                         .hasRole("USER")
+                        .requestMatchers(
+                                "/", "/assets", "/assets/**", "favicon.ico",
+                                "index", "/login", "/mytasks"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilter(new JwtValidationFilter(authenticationManager(), jwtService))
