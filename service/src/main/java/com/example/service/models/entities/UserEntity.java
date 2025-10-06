@@ -31,6 +31,10 @@ public class UserEntity {
     @JsonIgnore
     private List<Logins> logins;
 
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Tareas> tareas;
+
     @ManyToMany
     @JoinTable(
             name = "user_role",

@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -37,10 +38,11 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
             UserDetailsDto userDetailsDto = jwtService.validation(token);
             String username = userDetailsDto.getUsername();
             var authorities = userDetailsDto.getAuthorities();
-            var authtoken = new UsernamePasswordAuthenticationToken(
+            Authentication authtoken = new UsernamePasswordAuthenticationToken(
                     username, null, authorities
             );
             SecurityContextHolder.getContext().setAuthentication(authtoken);
+            chain.doFilter(request, response);
         }catch (TokenExpireException e){
             if(!e.getMessage().equals("expiration")){
                 chain.doFilter(request, response);

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -46,11 +47,39 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http, JwtService jwtService) throws Exception{
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a->a
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/user/login",
+                                "/api/user/register",
+                                "/api/user/refreshauth",
+                                "/api/user/logout"
+                        ).permitAll()
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/user/userinfo",
+                                "/api/tarea"
+                        ).hasRole("USER")
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/tarea"
+                        )
+                        .hasRole("USER")
+                        .requestMatchers(
+                                HttpMethod.PUT,
+                                "/api/tarea/{id}"
+                        )
+                        .hasRole("USER")
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/tarea/{id}"
+                        )
+                        .hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .addFilter(new JwtValidationFilter(authenticationManager(), jwtService))
                 .cors(c->c.configurationSource(corsConfigurationSource()))
-                .sessionManagement(s->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionManagement(
+                        s->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
